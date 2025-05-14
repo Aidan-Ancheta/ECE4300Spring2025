@@ -1,0 +1,68 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 03/23/2025 10:44:48 PM
+// Design Name: 
+// Module Name: I_Fetch
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module I_Fetch(
+    input clk,
+    input reset,
+    output wire [31:0] instrout,
+    output wire [31:0] npcout,
+    input wire EX_MEM_PCsrc,
+    input wire [31:0] EX_MEM_NPC
+);
+    wire [31:0] PC; 
+    wire [31:0] data; 
+    wire [31:0] npc, npc_mux; 
+
+    mux selector(
+        .a(EX_MEM_NPC), 
+        .b(npc), 
+        .sel(EX_MEM_PCsrc), 
+        .y(npc_mux)
+    );
+
+    counter PC_count(
+        .clk(clk), 
+        .reset(reset), 
+        .PC(PC), 
+        .npc(npc_mux)
+    ); 
+
+    mem_f memory1(
+        .addr(PC), 
+        .data(data), 
+        .clk(clk)
+    );
+
+    latch if_id1(
+        .clk(clk), 
+        .instr(data), 
+        .npc(npc), 
+        .instrout(instrout), 
+        .npcout(npcout)
+    );
+
+    adder adder1(
+        .pc(PC), 
+        .next_pc(npc)
+    );
+
+endmodule
