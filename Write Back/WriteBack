@@ -1,0 +1,33 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05/12/2025 08:38:34 PM
+// Design Name: 
+// Module Name: wb_stage
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module wb_stage(
+input [31:0] mem_Read_data,
+    input [31:0] mem_ALU_result,
+    input        MemtoReg,
+    output [31:0] wb_data
+);
+
+    // 2:1 Multiplexer for selecting data to write back
+    assign wb_data = MemtoReg ? mem_Read_data : mem_ALU_result;
+
+endmodule
