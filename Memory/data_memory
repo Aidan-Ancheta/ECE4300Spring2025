@@ -1,0 +1,62 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 05/08/2025 05:10:56 PM
+// Design Name: 
+// Module Name: data_memory
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module data_memory(
+    input [31:0] Address,
+    input [31:0] WriteData,
+    input MemWrite,
+    input MemRead,
+    output reg [31:0] ReadData
+);
+    reg [31:0] memory [0:255];  // 256 words of memory
+
+    // Memory initialization
+    initial begin
+        memory[0] = 32'h002300AA;
+        memory[1] = 32'h10654321;
+        memory[2] = 32'h00100022;
+        memory[3] = 32'h8C123456;
+        memory[4] = 32'h8F123456;
+        memory[5] = 32'hAD654321;
+        memory[6] = 32'h13012345;
+        memory[7] = 32'hAC654321;
+        memory[8] = 32'h12012345;
+        // Initialize the rest of the memory to zero for safety
+        end
+
+    // Read logic
+    always @(*) begin
+        if (MemRead) begin
+            ReadData = memory[Address[9:2]]; // Assuming word addressing (aligned)
+        end else begin
+            ReadData = 32'b0;
+        end
+    end
+
+    // Write logic
+    always @(posedge MemWrite) begin
+        if (MemWrite) begin
+            memory[Address[9:2]] = WriteData;
+        end
+    end
+endmodule
+
