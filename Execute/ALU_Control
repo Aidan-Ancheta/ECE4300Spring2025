@@ -1,0 +1,43 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/30/2025 11:37:25 PM
+// Design Name: 
+// Module Name: alu_control
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module alu_control(
+    input [1:0] alu_op,
+    input [5:0] funct,
+    output reg [2:0] sel
+);
+    always @(*) begin
+        case (alu_op)
+            2'b00: sel = 3'b010;
+            2'b01: sel = 3'b110;
+            2'b10: case (funct)
+                6'b100000: sel = 3'b010; 
+                6'b100010: sel = 3'b110; 
+                6'b100100: sel = 3'b000; 
+                6'b100101: sel = 3'b001; 
+                6'b101010: sel = 3'b111; 
+                default:   sel = 3'bxxx;
+            endcase
+            default: sel = 3'b000;
+        endcase
+    end
+endmodule
