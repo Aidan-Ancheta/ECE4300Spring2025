@@ -1,0 +1,29 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/15/2025 09:37:12 PM
+// Design Name: 
+// Module Name: signExtend
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module signExtend(
+    input wire [15:0] immediate,
+    output wire [31:0] extended
+    );
+    assign extended = (immediate[15] == 1) ? {16'b1111111111111111,immediate} : {16'b0000000000000000,immediate};
+    
+endmodule
