@@ -1,0 +1,36 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 04/30/2025 08:23:13 PM
+// Design Name: 
+// Module Name: ex_mem_latch
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module ex_mem_latch(
+    input clk,
+    input [5:0] instr,
+    input [5:0] npc,
+    output reg [5:0] instrout,
+    output reg [5:0] npcout
+);
+
+    always @(posedge clk) begin
+        instrout <= instr;
+        npcout <= npc;
+    end
+
+endmodule
